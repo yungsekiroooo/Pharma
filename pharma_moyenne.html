@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calcul Moyenne - Pharmacie</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #a18cd1, #fbc2eb);
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #4a148c;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+    }
+    th {
+      background-color: #f3e5f5;
+    }
+    .note {
+      color: red;
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .total, .moyenne {
+      margin-top: 25px;
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 25px;
+      background-color: #7b1fa2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #4a148c;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculez votre Moyenne - 1ère année Pharmacie</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Module</th>
+          <th>Coefficient</th>
+          <th>Note /20</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <tr><td>Biomathématique, informatique et statistique</td><td>3</td><td><input type="number" min="0" max="20" step="0.01"></td></tr>
+        <tr><td>Chimie pharmaceutique générale</td><td>3</td><td><input type="number" min="0" max="20" step="0.01"></td></tr>
+        <tr><td>Chimie pharmaceutique organique</td><td>3</td><td><input type="number" min="0" max="20" step="0.01"></td></tr>
+        <tr><td>Biologie cellulaire</td><td>3</td><td><input type="number" min="0" max="20" step="0.01"></td></tr>
+        <tr><td>Physique pharmaceutique</td><td>2</td><td><input type="number" min="0" max="20" step="0.01"></td></tr>
+        <tr><td>Biologie végétale</td><td>2</td><td><input type="number" min="0" max="20" step="0.01"></td></tr>
+        <tr><td>Anatomie fonctionnelle descriptive</td><td>2</td><td><input type="number" min="0" max="20" step="0.01"></td></tr>
+        <tr><td>Physiologie</td><td>2</td><td><input type="number" min="0" max="20" step="0.01"></td></tr>
+        <tr><td>Science Humaine (Histoire & Galénique)</td><td>1</td><td><input type="number" min="0" max="20" step="0.01"></td></tr>
+        <tr><td>Langue Française</td><td>1</td><td><input type="number" min="0" max="20" step="0.01"></td></tr>
+      </tbody>
+    </table>
+
+    <p class="note">⚠️ إذا لم تجتز مادة، ضع صفرًا في النقطة الخاصة بها.</p>
+
+    <button onclick="calculerMoyenne()">احسب المعدل</button>
+
+    <div class="total" id="total"></div>
+    <div class="moyenne" id="moyenne"></div>
+
+    <div class="footer">Made by Meli ❤️</div>
+  </div>
+
+  <script>
+    function calculerMoyenne() {
+      const rows = document.querySelectorAll("#table-body tr");
+      let totalPoints = 0;
+      let totalCoeffs = 0;
+
+      rows.forEach(row => {
+        const coeff = parseFloat(row.children[1].textContent);
+        const note = parseFloat(row.children[2].querySelector("input").value);
+
+        if (!isNaN(note)) {
+          totalPoints += note * coeff;
+          totalCoeffs += coeff;
+        }
+      });
+
+      const moyenne = totalPoints / totalCoeffs;
+      document.getElementById("total").textContent = "Total des points: " + totalPoints.toFixed(2);
+      document.getElementById("moyenne").textContent = "Moyenne Générale: " + moyenne.toFixed(2) + " /20";
+    }
+  </script>
+</body>
+</html>
